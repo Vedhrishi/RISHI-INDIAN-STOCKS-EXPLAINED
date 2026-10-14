@@ -70,7 +70,28 @@ const t = setInterval(() => {
   }
   paint(); setInterval(paint, 1000);
   const nb = $('#notify');
-  const sync = () => { nb.textContent = !('Notification' in window) ? 'Notifications not supported here' : Notification.permission === 'granted' ? 'Notifications on (keep this tab open)' : 'Notify me when it drops'; };
+  const sync = () => { nb.textContent = !('Notification' in window) ? 'Notifications not supported here' : Notification.permission === 'granted' ? 'Notifications on' : 'Notify me when it drops'; };
   nb.addEventListener('click', async () => { if ('Notification' in window) { await Notification.requestPermission(); sync(); } });
   sync();
+})();
+
+// ---- background push (works when the site is closed) ----
+(() => {
+  const cfg = window.RISHI_CONFIG || {};
+  const b64 = s => Uint8Array.from(atob((s + '='.repeat((4 - s.length % 4) % 4)).replace(/-/g, '+').replace(/_/g, '/')), c => c.charCodeAt(0));
+  const btn = document.getElementById('notify');
+  if (!('serviceWorker' in navigator) || !('PushManager' in window) || !cfg.VAPID_PUBLIC_KEY) return;
+  navigator.serviceWorker.register('/sw.js');
+  btn.addEventListener('click', async () => {
+    try {
+      const reg = await navigator.serviceWorker.ready;
+      if (await Notification.requestPermission() !== 'granted') return;
+      const sub = (await reg.pushManager.getSubscription()) || await reg.pushManager.subscribe({ userVisibleOnly: true, applicationServerKey: b64(cfg.VAPID_PUBLIC_KEY) });
+      await fetch(cfg.SUPABASE_URL + '/rest/v1/push_subscriptions', { method: 'POST',
+        headers: { apikey: cfg.SUPABASE_ANON_KEY, Authorization: 'Bearer ' + cfg.SUPABASE_ANON_KEY, 'Content-Type': 'application/json', Prefer: 'resolution=ignore-duplicates' },
+        body: JSON.stringify({ endpoint: sub.endpoint, sub: sub.toJSON() }) });
+      btn.textContent = "You're subscribed. We'll ping you on every new episode.";
+    } catch (e) { btn.textContent = 'Could not turn on notifications'; }
+  });
+  navigator.serviceWorker.ready.then(r => r.pushManager.getSubscription()).then(s => { if (s) btn.textContent = "You're subscribed. We'll ping you on every new episode."; });
 })();
