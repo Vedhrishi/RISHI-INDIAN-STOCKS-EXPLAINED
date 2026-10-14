@@ -53,7 +53,8 @@ more.addEventListener('click', () => { shown += 24; render(); });
 render();
 
 const weekly = data.weekly.filter(released);
-document.getElementById('weeklyGrid').innerHTML = (weekly.length ? weekly : data.weekly.slice(0, 3)).map(w => `
+const wg = document.getElementById('weeklyGrid');
+if (wg) wg.innerHTML = (weekly.length ? weekly : data.weekly.slice(0, 3)).map(w => `
   <article class="card">
     <img loading="lazy" src="${w.thumb}" alt="${esc(w.title)}">
     <div class="body"><span class="ep">Week ${w.week} · ${w.minutes} min</span><h3>${esc(w.title)}</h3>
