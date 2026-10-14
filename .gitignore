@@ -1,2 +1,4 @@
 .vercel
 *.part.mp4
+supabase/.temp
+.env*

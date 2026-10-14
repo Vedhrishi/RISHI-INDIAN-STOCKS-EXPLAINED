@@ -1,6 +1,5 @@
-// Optional: fill these in after creating a Supabase project (Project Settings → API).
-// Leave empty to use the bundled data/videos.json. The anon key is safe to publish (Row Level Security is on).
+// Supabase public (publishable) key: safe in the browser, access is limited by Row Level Security.
 window.RISHI_CONFIG = {
-  SUPABASE_URL: '',
-  SUPABASE_ANON_KEY: ''
+  SUPABASE_URL: 'https://ahwvetfowndvtqvovvse.supabase.co',
+  SUPABASE_ANON_KEY: 'sb_publishable_-0y3r-2-vqTj5fLjqVn0IQ_3iJH8yXd'
 };
