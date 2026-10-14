@@ -10,13 +10,7 @@ const now = new Date(new Date().toLocaleString('en-US', { timeZone: 'Asia/Kolkat
 const released = e => new Date(e.publish.replace(' ', 'T')) <= now;
 
 let episodes = data.episodes.filter(released);
-if (supabase) {
-  const { data: rows, error } = await supabase.from('episodes').select('*').order('publish_at', { ascending: false });
-  if (!error && rows?.length) {
-    episodes = rows.map(r => ({ ep: r.ep, part: r.part, title: r.title, series_title: r.series_title, publish: r.publish_at.replace('T', ' ').slice(0, 16),
-      thumb: r.thumb, youtube: r.youtube_url, instagram: r.instagram_url, facebook: r.facebook_url, tags: [] })).reverse();
-  }
-}
+// episode list comes from data/videos.json (single source of truth)
 episodes = episodes.slice().reverse(); // newest first
 
 document.querySelectorAll('[data-link]').forEach(a => a.href = data.links[a.dataset.link]);

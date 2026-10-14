@@ -19,9 +19,12 @@ comps = json.load(open(comp_f, encoding='utf-8')) if os.path.exists(comp_f) else
 def topic(k):
     return yt[k]['title'].split(' | ')[0].split(' \u2192 ')[-1]
 
+CAP = json.load(open(os.path.join(ROOT, 'series_cap.json')))['last_ep']
 eps = []
 for k, v in yt.items():
     ep, part = v['ep'], v['part']
+    if ep > CAP:
+        continue
     date = v['publish']
     tags = [t for t in re.findall(r'#(\w+)', fb.get(k, {}).get('caption', '')) if t.lower() != 'indianstocksexplained']
     thumb = f'thumbs/ep{ep:03d}_p{part}.jpg'
@@ -34,7 +37,7 @@ for k, v in yt.items():
                     youtube=yts.get(k, {}).get('url') or '', instagram=IG, facebook=FB))
 eps.sort(key=lambda e: (e['publish'], e['ep'], e['part']))
 
-weekly = [dict(week=m['week'], title=m['title'], publish=m['publish'], minutes=m['minutes'], dates=m['dates'],
+weekly = [] if True else [dict(week=m['week'], title=m['title'], publish=m['publish'], minutes=m['minutes'], dates=m['dates'],
                thumb=f"comp_thumbs/{m['thumbnail']}") for m in sorted(comps.values(), key=lambda m: m['week'])]
 os.makedirs(os.path.join(WEB, 'comp_thumbs'), exist_ok=True)
 for m in comps.values():
