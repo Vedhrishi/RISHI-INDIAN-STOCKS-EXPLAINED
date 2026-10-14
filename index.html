@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>RISHI | Indian Stocks Explained</title>
+<meta name="description" content="Daily animated money stories for Indian families: savings, tax, scams, insurance and investing basics. Watch on Instagram, YouTube and Facebook.">
+<meta property="og:title" content="RISHI | Indian Stocks Explained">
+<meta property="og:description" content="A new animated money story every day. Part 1 at 7 AM, Part 2 at 7 PM IST.">
+<meta property="og:image" content="assets/cover.jpg">
+<link rel="icon" href="assets/profile.png">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header class="hero">
+  <nav class="nav">
+    <a class="brand" href="#"><img src="assets/profile.png" alt="RISHI logo"><span>RISHI</span></a>
+    <div class="navlinks">
+      <a href="#episodes">Episodes</a><a href="#weekly">Weekly</a><a href="#earn">Earn</a><a href="#course">Course</a>
+    </div>
+  </nav>
+  <div class="hero-inner">
+    <div>
+      <p class="eyebrow">Indian Stocks Explained</p>
+      <h1>A new animated money story <span>every day</span></h1>
+      <p class="lead">Rishi, Priya, Paati, Murugan and Ravi explain savings, tax, scams, insurance and investing in 80-second stories. Part 1 at 7 AM, Part 2 at 7 PM IST.</p>
+      <div class="platforms" id="platforms">
+        <a class="btn ig" target="_blank" rel="noopener" data-link="instagram">Instagram</a>
+        <a class="btn yt" target="_blank" rel="noopener" data-link="youtube">YouTube</a>
+        <a class="btn fb" target="_blank" rel="noopener" data-link="facebook">Facebook</a>
+      </div>
+    </div>
+    <img class="hero-art" src="assets/cover.jpg" alt="Rishi and Paati">
+  </div>
+</header>
+
+<main>
+  <section id="episodes">
+    <div class="section-head">
+      <h2>Episodes</h2>
+      <p id="count" class="muted"></p>
+    </div>
+    <div class="filters">
+      <input id="search" type="search" placeholder="Search a topic: SIP, tax, scam, gold…" aria-label="Search episodes">
+    </div>
+    <div id="grid" class="grid"></div>
+    <button id="more" class="btn ghost">Show more</button>
+  </section>
+
+  <section id="weekly">
+    <h2>Weekly compilations</h2>
+    <p class="muted">Seven stories in one video, every Sunday at 8 PM IST on YouTube.</p>
+    <div id="weeklyGrid" class="grid wide"></div>
+  </section>
+
+  <section id="earn">
+    <h2>Earn with skills <span class="tag">Bonus</span></h2>
+    <p class="muted">Honest, practical ways to build income. No get-rich-quick tricks.</p>
+    <div id="bonusGrid" class="grid bonus"></div>
+  </section>
+
+  <section id="course" class="course">
+    <div class="course-text">
+      <h2>Trading with Discipline <span class="tag gold">Coming soon</span></h2>
+      <p>A step-by-step course on how markets and orders really work, risk management, position sizing, journaling and the psychology that protects your capital.</p>
+      <ul>
+        <li>How buying and selling actually works on Indian exchanges</li>
+        <li>Planning every trade: entry, exit and stop-loss before you click</li>
+        <li>Position sizing so one bad day never ruins you</li>
+        <li>Building and reviewing a trading journal</li>
+      </ul>
+      <form id="waitlist" class="waitlist">
+        <input type="email" required placeholder="Your email for early access" aria-label="Email">
+        <button class="btn" type="submit">Join the waitlist</button>
+      </form>
+      <p id="waitmsg" class="muted small"></p>
+      <p class="muted small">No course can promise profits. Trading involves risk of loss; this course is educational and is not investment advice.</p>
+    </div>
+    <div class="locked">
+      <video src="media/course/preview_locked.mp4" autoplay muted loop playsinline disablepictureinpicture controlslist="nodownload nofullscreen noremoteplayback"></video>
+      <div class="lock-overlay"><span>🔒</span><b>Members only</b><small>Unlocks when the course launches</small></div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <p><b>RISHI | Indian Stocks Explained</b> · Daily animated money stories</p>
+  <p class="muted small">For education only. Not financial advice. Rishi and Priya are not SEBI-registered advisers. Investments are subject to market risks; examples are illustrative and returns are never guaranteed.</p>
+</footer>
+
+<dialog id="player"><video controls playsinline></video><button class="close" aria-label="Close">✕</button></dialog>
+<script src="config.js"></script>
+<script type="module" src="app.js"></script>
+</body>
+</html>
