@@ -12,6 +12,7 @@
 <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+<div id="progress"></div>
 <header class="hero">
   <nav class="nav">
     <a class="brand" href="#"><img src="assets/profile.png" alt="RISHI logo"><span>RISHI</span></a>
@@ -22,7 +23,7 @@
   <div class="hero-inner">
     <div>
       <p class="eyebrow">Indian Stocks Explained</p>
-      <h1>A new animated money story <span>every day</span></h1>
+      <h1>A new animated money story <span>every day</span><br>about <span id="rotator">saving</span></h1>
       <p class="lead">Rishi, Priya, Paati, Murugan and Ravi explain savings, tax, scams, insurance and investing in 80-second stories. Part 1 at 7 AM, Part 2 at 7 PM IST.</p>
       <div class="platforms" id="platforms">
         <a class="btn ig" target="_blank" rel="noopener" data-link="instagram">Instagram</a>
@@ -33,9 +34,16 @@
     <img class="hero-art" src="assets/cover.jpg" alt="Rishi and Paati">
   </div>
 </header>
+<div class="stats">
+  <div class="stat"><b data-count="365">0</b><span>days of stories</span></div>
+  <div class="stat"><b data-count="730">0</b><span>short videos</span></div>
+  <div class="stat"><b data-count="5">0</b><span>friendly characters</span></div>
+  <div class="stat"><b data-count="80">0</b><span>seconds each, no jargon</span></div>
+</div>
 
 <main>
   <section id="episodes">
+    <div id="spot"></div>
     <div class="section-head">
       <h2>Episodes</h2>
       <p id="count" class="muted"></p>
@@ -89,6 +97,10 @@
 </footer>
 
 <dialog id="player"><video controls playsinline></video><button class="close" aria-label="Close">✕</button></dialog>
+<div class="follow" id="follow"><span>Enjoying this? Follow RISHI</span>
+  <a class="btn ig" target="_blank" rel="noopener" data-link="instagram">Instagram</a>
+  <a class="btn yt" target="_blank" rel="noopener" data-link="youtube">YouTube</a></div>
+<script src="enhance.js" defer></script>
 <script src="config.js"></script>
 <script type="module" src="app.js"></script>
 </body>
