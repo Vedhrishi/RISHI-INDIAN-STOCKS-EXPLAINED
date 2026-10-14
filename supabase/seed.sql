@@ -63,6 +63,5 @@ insert into episodes (ep, part, title, series_title, publish_at, thumb, youtube_
 (31,2,'IPO Do''s and Don''ts','Why Didn''t I Get IPO Shares?','2026-11-11 19:00','thumbs/ep031_p2.jpg','','https://www.instagram.com/indian.stocks.explained/','https://www.facebook.com/112325647216156'),
 (32,1,'Grey Market Premium (GMP)','Grey Market Premium (GMP)','2026-11-12 07:00','thumbs/ep032_p1.jpg','','https://www.instagram.com/indian.stocks.explained/','https://www.facebook.com/112325647216156'),
 (32,2,'Can You Trust the GMP?','Grey Market Premium (GMP)','2026-11-12 19:00','thumbs/ep032_p2.jpg','','https://www.instagram.com/indian.stocks.explained/','https://www.facebook.com/112325647216156'),
-(33,1,'Why 9 in 10 F&O Traders Lose Money','Why 9 in 10 F&O Traders Lose Money','2026-11-13 07:00','thumbs/ep033_p1.jpg','','https://www.instagram.com/indian.stocks.explained/','https://www.facebook.com/112325647216156'),
-(33,2,'Which Cap Fits You?','Why 9 in 10 F&O Traders Lose Money','2026-11-13 19:00','thumbs/ep033_p2.jpg','','https://www.instagram.com/indian.stocks.explained/','https://www.facebook.com/112325647216156')
+(33,1,'Why 9 in 10 F&O Traders Lose Money','Why 9 in 10 F&O Traders Lose Money','2026-11-13 07:00','thumbs/ep033_p1.jpg','','https://www.instagram.com/indian.stocks.explained/','https://www.facebook.com/112325647216156')
 on conflict (ep, part) do update set title=excluded.title, youtube_url=excluded.youtube_url, publish_at=excluded.publish_at;
