@@ -45,3 +45,32 @@ const t = setInterval(() => {
     <span class="live">NEW</span><h2 style="margin:10px 0 4px">${c.querySelector('h3').textContent}</h2>
     <p class="muted">${c.querySelector('.ep').textContent} · fresh out, watch it first</p>${links}</div></div>`;
 }, 300);
+
+// ---- countdown to next episode + opt-in notifications ----
+(async () => {
+  const d = await fetch('data/videos.json?v=' + Date.now()).then(r => r.json());
+  const ist = () => new Date(new Date().toLocaleString('en-US', { timeZone: 'Asia/Kolkata' }));
+  const at = e => new Date(e.publish.replace(' ', 'T'));
+  const upcoming = () => d.episodes.filter(e => at(e) > ist()).sort((a, b) => at(a) - at(b))[0];
+  let nxt = upcoming(), announced = null;
+  function paint() {
+    if (!nxt) { $('#nextTitle').textContent = 'More stories are on the way'; return; }
+    if (at(nxt) - ist() <= 0) {
+      if ('Notification' in window && Notification.permission === 'granted' && announced !== nxt.publish) {
+        announced = nxt.publish;
+        new Notification('New RISHI episode is out!', { body: nxt.title, icon: 'assets/profile.png' });
+      }
+      nxt = upcoming(); if (!nxt) return paint();
+    }
+    const s = Math.max(0, Math.floor((at(nxt) - ist()) / 1000));
+    $('#nextTitle').textContent = 'Episode ' + nxt.ep + ' - Part ' + nxt.part + ': ' + nxt.title;
+    $('#nextWhen').textContent = 'Drops ' + at(nxt).toLocaleString('en-IN', { weekday: 'long', day: 'numeric', month: 'short', hour: 'numeric', minute: '2-digit' }) + ' IST';
+    $('#cd').textContent = Math.floor(s / 86400); $('#ch').textContent = String(Math.floor(s % 86400 / 3600)).padStart(2, '0');
+    $('#cm').textContent = String(Math.floor(s % 3600 / 60)).padStart(2, '0'); $('#cs').textContent = String(s % 60).padStart(2, '0');
+  }
+  paint(); setInterval(paint, 1000);
+  const nb = $('#notify');
+  const sync = () => { nb.textContent = !('Notification' in window) ? 'Notifications not supported here' : Notification.permission === 'granted' ? 'Notifications on (keep this tab open)' : 'Notify me when it drops'; };
+  nb.addEventListener('click', async () => { if ('Notification' in window) { await Notification.requestPermission(); sync(); } });
+  sync();
+})();
