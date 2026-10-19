@@ -2,3 +2,6 @@
 *.part.mp4
 supabase/.temp
 .env*
+!publisher/.env.example
+publisher/state/
+__pycache__/

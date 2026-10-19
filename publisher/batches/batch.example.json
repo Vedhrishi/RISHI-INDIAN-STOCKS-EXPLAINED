@@ -1,0 +1,16 @@
+{
+  "name": "batch.example",
+  "items": [
+    {
+      "ep": 34, "part": 1,
+      "file": "rishi_ep034_part1_instagram.mp4",
+      "files": {"youtube": "rishi_ep034_part1_youtube.mp4", "facebook": "rishi_ep034_part1_facebook.mp4"},
+      "title": "Why FDs Beat Savings Accounts",
+      "series_title": "Fixed Deposits Explained",
+      "tags": ["fixeddeposit", "personalfinanceindia", "moneytips", "savings"],
+      "publish": "2026-10-20 10:40",
+      "thumb": "optional_custom_thumb.jpg",
+      "captions": {"instagram": "optional custom caption, overrides the generated one"}
+    }
+  ]
+}
