@@ -11,7 +11,7 @@ import argparse, concurrent.futures as cf, datetime as dt, json, mimetypes, os, 
 import urllib.error, urllib.parse, urllib.request
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 
-HERE = os.path.dirname(os.path.abspath(__file__))
+HERE = os.path.dirname(sys.executable) if getattr(sys, 'frozen', False) else os.path.dirname(os.path.abspath(__file__))  # exe lives in publisher/
 SITE = os.path.dirname(HERE)
 STATE_DIR = os.path.join(HERE, 'state')
 IST = dt.timezone(dt.timedelta(hours=5, minutes=30))

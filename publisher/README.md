@@ -2,7 +2,13 @@
 
 One tool that takes a **batch** of finished episodes and publishes them to **YouTube, Facebook, Instagram and the website** together. Python 3.9+ standard library only; needs `ffmpeg`/`ffprobe` and `git` on PATH.
 
-## Quick start
+## The app (no terminal)
+Double-click **`RISHI_Publisher.bat`** (or `python rishi_app.py`; `build_exe.bat` makes a standalone `RISHI_Publisher.exe`).
+1. **Settings** - paste the platform keys, *Save*, then *Check tools and keys*.
+2. **Batch** - *New batch from folder...*, set the first slot and episodes/day, double-click cells to fill in title, series, tags and times, *Save batch*.
+3. **Publish** - tick platforms, then *Validate* -> *Dry run* -> *Publish now*. *Keep running until done* re-checks every 5 minutes so Instagram posts go out at their slot (leave the PC on). The table and log update live.
+
+## Command line (same engine)
 1. `copy .env.example .env` and fill in the keys (see *Credentials*). Run `python rishi_publisher.py doctor`.
 2. Put the episode `.mp4` files in a folder (names like `rishi_ep034_part1_instagram.mp4`).
 3. `python rishi_publisher.py scan "R:\INSTA\output\next" --start "2026-10-20 10:40"` writes `batch.json` with ep/part/file/publish time (1 episode/day, parts one minute apart; `--eps-per-day` to change).
@@ -10,7 +16,7 @@ One tool that takes a **batch** of finished episodes and publishes them to **You
 5. `python rishi_publisher.py validate batch.json`, then `python rishi_publisher.py run batch.json --dry-run`, then for real:
    `python rishi_publisher.py run batch.json --push --batch-size 10 --watch`
 
-Prefer clicking? `RISHI_Publisher.bat` (or `python rishi_publisher.py ui batch.json --push`) opens a dashboard at http://127.0.0.1:8765 with *Publish batch* and *Dry run* buttons and live per-platform status.
+Alternatively `python rishi_publisher.py ui batch.json --push` opens a browser dashboard at http://127.0.0.1:8765 with *Publish batch* and *Dry run* buttons and live per-platform status.
 
 ## Phases (each batch)
 | # | Phase | What happens |
@@ -37,6 +43,7 @@ Safe to stop and re-run at any time: progress is saved to `state/<batch>.json` a
 - Tokens expire (Meta long-lived tokens ~60 days). `doctor` flags a rejected Facebook token; a failed item shows the API error in `status` and is retried on the next run.
 
 ## Not done / know before you rely on it
+- The window was tested under a virtual display on Linux only; the Windows launcher and the `.exe` build were not run.
 - The platform calls were tested against **mocked responses only** (no real accounts were available when this was built). Do the first run with 1 item on real accounts and check each platform.
 - Comments, first-comment hashtags, YouTube custom thumbnails for Shorts, and the weekly compilations are not handled.
 - `--push` publishes whatever changed in `data/`, `supabase/`, `thumbs/`; if you use Supabase for the episode list, also run the regenerated `supabase/seed.sql` there.
