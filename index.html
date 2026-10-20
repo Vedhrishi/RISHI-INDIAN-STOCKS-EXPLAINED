@@ -10,6 +10,9 @@
 <meta property="og:image" content="assets/cover.jpg">
 <link rel="icon" href="assets/profile.png">
 <link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="story.css">
+<link rel="stylesheet" href="sell.css">
+<link rel="stylesheet" href="netflix.css">
 </head>
 <body>
 <div id="progress"></div>
@@ -17,27 +20,34 @@
   <nav class="nav">
     <a class="brand" href="#"><img src="assets/profile.png" alt="RISHI logo"><span>RISHI</span></a>
     <div class="navlinks">
-      <a href="#episodes">Episodes</a><a href="#earn">Earn</a><a href="#course">Course</a>
+      <a href="#episodes">Episodes</a><a href="studio">For business</a><a href="learn">For schools</a><a href="#course">Course</a>
     </div>
   </nav>
   <div class="hero-inner">
     <div>
       <p class="eyebrow">Indian Stocks Explained</p>
       <h1>A new animated money story <span>every day</span><br>about <span id="rotator">saving</span></h1>
-      <p class="lead">Rishi, Priya, Paati, Murugan and Ravi explain savings, tax, scams, insurance and investing in 80-second stories. Part 1 at 7 AM, Part 2 at 7 PM IST.</p>
+      <p class="lead">Follow Rishi from a curious boy with a magic satchel to a grown-up investor teaching his wife Priya, one 80-second story at a time: Zerodha how-tos, money mysteries and scams, each with a twist. Part 1 at 7 AM, Part 2 at 7 PM IST.</p>
       <div class="platforms" id="platforms">
         <a class="btn ig" target="_blank" rel="noopener" data-link="instagram">Instagram</a>
         <a class="btn yt" target="_blank" rel="noopener" data-link="youtube">YouTube</a>
         <a class="btn fb" target="_blank" rel="noopener" data-link="facebook">Facebook</a>
       </div>
     </div>
-    <img class="hero-art" src="assets/cover.jpg" alt="Rishi and Paati">
+    <div class="hero-stage" aria-hidden="true">
+      <div class="sparkles"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <img class="char c-kid" src="assets/chars/rishi_kid.png" alt="">
+      <img class="char c-rishi" src="assets/chars/rishi.png" alt="">
+      <img class="char c-priya" src="assets/chars/priya.png" alt="">
+      <div class="bubble">Every big story starts with one small step ✨</div>
+    </div>
   </div>
+  <a id="continue" class="continue" hidden></a>
 </header>
 <div class="stats">
-  <div class="stat"><b data-count="10">0</b><span>episodes so far</span></div>
-  <div class="stat"><b data-count="20">0</b><span>short videos</span></div>
-  <div class="stat"><b data-count="5">0</b><span>friendly characters</span></div>
+  <div class="stat"><b id="statEp" data-count="10">0</b><span>episodes so far</span></div>
+  <div class="stat"><b data-count="3">0</b><span>languages</span></div>
+  <div class="stat"><b data-count="4">0</b><span>story seasons</span></div>
   <div class="stat"><b data-count="80">0</b><span>seconds each, no jargon</span></div>
 </div>
 
@@ -46,6 +56,19 @@
     <div><span class="live">NEXT DROP</span><h2 id="nextTitle">Loading…</h2><p class="muted" id="nextWhen"></p></div>
     <div class="clock" id="clock"><div><b id="cd">0</b><i>days</i></div><div><b id="ch">00</b><i>hrs</i></div><div><b id="cm">00</b><i>min</i></div><div><b id="cs">00</b><i>sec</i></div></div>
     <button id="notify" class="btn" type="button">🔔 Notify me when it drops</button>
+  </section>
+
+  <section id="seasons">
+    <div class="section-head"><h2>Watch the story</h2><p class="muted">Swipe through each season. Every episode ends on a cliffhanger.</p></div>
+    <div id="seasonList"></div>
+  </section>
+
+  <section id="work">
+    <div class="section-head"><h2>Work with RISHI</h2><p class="muted">The studio behind the series makes videos and lessons for you too.</p></div>
+    <div class="cross">
+      <a class="biz" href="studio"><h3>Animated Reels for your business</h3><p>Characters, voiceover and your logo, in English, Hindi and Telugu. Free preview.</p><span class="go">RISHI Studio →</span><img src="assets/chars/priya.png" alt=""></a>
+      <a class="edu" href="learn"><h3>Money lessons for kids and schools</h3><p>Animated lessons with worksheets and teacher notes. Free sample worksheet.</p><span class="go">RISHI Learn →</span><img src="assets/chars/rishi_kid.png" alt=""></a>
+    </div>
   </section>
 
   <section id="episodes">
@@ -96,6 +119,9 @@
   <p class="muted small">For education only. Not financial advice. Rishi and Priya are not SEBI-registered advisers. Investments are subject to market risks; examples are illustrative and returns are never guaranteed.</p>
 </footer>
 
+<nav class="tabbar" aria-label="Quick navigation">
+  <a href="#seasons"><span>🎬</span>Story</a><a href="#next"><span>⏰</span>Next</a><a href="#episodes"><span>🔎</span>Search</a><a href="#work"><span>💼</span>Work</a><a data-link="instagram" target="_blank" rel="noopener"><span>❤️</span>Follow</a>
+</nav>
 <dialog id="player"><video controls playsinline></video><button class="close" aria-label="Close">✕</button></dialog>
 <div class="follow" id="follow"><span>Enjoying this? Follow RISHI</span>
   <a class="btn ig" target="_blank" rel="noopener" data-link="instagram">Instagram</a>
@@ -103,5 +129,6 @@
 <script src="enhance.js" defer></script>
 <script src="config.js"></script>
 <script type="module" src="app.js"></script>
+<script src="seasons.js" defer></script>
 </body>
 </html>
