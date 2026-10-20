@@ -1,0 +1,34 @@
+/* Apple-style cinematic 3D scroll intro. Self-contained; sits above the existing
+   header/hero so the rest of the page is unaffected if this section is ever removed. */
+#cine{position:relative;height:420vh;background:#000}
+#cine-pin{position:sticky;top:0;height:100vh;overflow:hidden;display:flex;align-items:center;justify-content:center}
+#cine-canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
+#cine-canvas canvas{width:100%!important;height:100%!important}
+#cine-nav{position:fixed;top:0;left:0;right:0;z-index:30;display:flex;justify-content:space-between;align-items:center;
+  padding:18px 28px;color:#fff;mix-blend-mode:difference}
+#cine-nav .brand{display:flex;align-items:center;gap:10px;font-weight:800;font-size:20px;text-decoration:none;color:#fff}
+#cine-nav .brand img{width:34px;height:34px;border-radius:50%}
+#cine-copy{position:relative;z-index:10;text-align:center;color:#fff;pointer-events:none;max-width:720px;padding:0 24px}
+#cine-copy .eyebrow{color:#ffc42e;font-weight:700;letter-spacing:.12em;text-transform:uppercase;font-size:13px;opacity:0}
+#cine-copy h1{font-size:clamp(34px,6vw,76px);line-height:1.05;margin:10px 0;font-weight:800;opacity:0}
+#cine-copy h1 b{color:#ffc42e;font-weight:800}
+#cine-copy p{font-size:clamp(15px,2vw,19px);color:#d6d6ea;opacity:0;max-width:520px;margin:0 auto}
+#cine-cards{position:absolute;bottom:64px;left:0;right:0;display:flex;justify-content:center;gap:18px;z-index:10;
+  padding:0 24px;opacity:0}
+.cine-card{background:rgba(20,22,42,.65);backdrop-filter:blur(14px);border:1px solid rgba(255,255,255,.12);
+  border-radius:16px;padding:16px 20px;color:#fff;max-width:220px;pointer-events:auto}
+.cine-card b{display:block;font-size:15px;margin-bottom:4px;color:#ffc42e}
+.cine-card span{font-size:13px;color:#cfcfe0;line-height:1.4}
+#cine-scrolltip{position:absolute;bottom:20px;left:50%;transform:translateX(-50%);color:#9a9ab0;font-size:12px;
+  letter-spacing:.08em;text-transform:uppercase;z-index:10;display:flex;flex-direction:column;align-items:center;gap:6px}
+#cine-scrolltip i{width:1px;height:28px;background:linear-gradient(#ffc42e,transparent);animation:cine-tip 1.6s ease-in-out infinite}
+@keyframes cine-tip{0%,100%{opacity:.3}50%{opacity:1}}
+#cine-sound{position:fixed;right:20px;bottom:20px;z-index:30;width:46px;height:46px;border-radius:50%;border:1px solid rgba(255,255,255,.25);
+  background:rgba(10,10,20,.6);backdrop-filter:blur(8px);color:#fff;cursor:pointer;font-size:18px;display:flex;align-items:center;justify-content:center}
+#cine-fallback{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:18px;color:#fff;text-align:center;padding:40px 24px}
+#cine-fallback img{width:220px;animation:cine-spin 8s linear infinite}
+@keyframes cine-spin{from{transform:rotateY(0)}to{transform:rotateY(360deg)}}
+@media (prefers-reduced-motion:reduce),(max-width:600px){
+  #cine{height:auto}
+  #cine-pin{position:relative;height:88vh}
+}

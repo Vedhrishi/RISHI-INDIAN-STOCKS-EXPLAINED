@@ -13,8 +13,35 @@
 <link rel="stylesheet" href="story.css">
 <link rel="stylesheet" href="sell.css">
 <link rel="stylesheet" href="netflix.css">
+<link rel="stylesheet" href="cinematic.css">
+<script type="importmap">
+{"imports":{
+  "three":"https://cdn.jsdelivr.net/npm/three@0.165.0/build/three.module.js",
+  "three/addons/":"https://cdn.jsdelivr.net/npm/three@0.165.0/examples/jsm/",
+  "gsap":"https://cdn.jsdelivr.net/npm/gsap@3.12.5/index.js",
+  "gsap/ScrollTrigger":"https://cdn.jsdelivr.net/npm/gsap@3.12.5/ScrollTrigger.js"
+}}
+</script>
 </head>
 <body>
+<section id="cine">
+  <nav id="cine-nav"><a class="brand" href="#"><img src="assets/profile.png" alt="RISHI logo"><span>RISHI</span></a></nav>
+  <div id="cine-pin">
+    <div id="cine-canvas"></div>
+    <div id="cine-copy">
+      <p class="eyebrow">Indian Stocks Explained</p>
+      <h1>A new animated money story <b>every day</b></h1>
+      <p>Follow Rishi from a curious boy with a magic satchel to a grown-up investor teaching his wife Priya, one 80-second story at a time.</p>
+    </div>
+    <div id="cine-cards">
+      <div class="cine-card"><b>100 episodes</b><span>and counting, every one a cliffhanger</span></div>
+      <div class="cine-card"><b>3 languages</b><span>English, Hindi, Telugu</span></div>
+      <div class="cine-card"><b>80 seconds</b><span>no jargon, ever</span></div>
+    </div>
+    <div id="cine-scrolltip"><span>Scroll</span><i></i></div>
+  </div>
+  <button id="cine-sound" aria-label="Toggle ambient sound">&#x1F507;</button>
+</section>
 <div id="progress"></div>
 <header class="hero">
   <nav class="nav">
@@ -130,5 +157,6 @@
 <script src="config.js"></script>
 <script type="module" src="app.js"></script>
 <script src="seasons.js" defer></script>
+<script type="module" src="cinematic.js"></script>
 </body>
 </html>
