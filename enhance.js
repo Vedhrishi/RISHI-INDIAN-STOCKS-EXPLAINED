@@ -17,7 +17,7 @@ function reveal(root = document) {
     if (el.classList.contains('reveal')) return;
     el.classList.add('reveal'); el.style.setProperty('--d', (i % 6) * .07 + 's'); io.observe(el);
   });
-  $$('[data-count]').forEach(b => io.observe(b));
+  $$('[data-count]').forEach(b => { if (!b.classList.contains('in')) io.observe(b); });
 }
 function countUp(el) {
   const n = +el.dataset.count, t0 = performance.now();
