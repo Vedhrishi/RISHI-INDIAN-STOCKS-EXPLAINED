@@ -20,16 +20,17 @@ else if (!canWebGL || prefersReduced || isSmall) {
   Promise.all([import('three'), import('gsap'), import('gsap/ScrollTrigger')]).then(([t, g, st]) => {
     THREE = t; gsap = g.default; ScrollTrigger = st.ScrollTrigger;
     gsap.registerPlugin(ScrollTrigger);
-    runCinematic();
+    (window.requestIdleCallback || (f => setTimeout(f, 300)))(runCinematic, { timeout: 1500 });
   }).catch(runFallback);
 }
 
 function runFallback() {
   const host = document.getElementById('cine-canvas');
   host.innerHTML = `<div id="cine-fallback">
-    <img src="assets/coin_fallback.png" alt="RISHI gold coin" onerror="this.style.display='none'">
+    <img src="assets/coin_fallback.png" alt="RISHI gold coin">
     <div><p class="eyebrow" style="color:#ffc42e;font-weight:700;letter-spacing:.1em;text-transform:uppercase;font-size:13px">Indian Stocks Explained</p>
     <h1 style="font-size:clamp(28px,7vw,48px);margin:8px 0">A new animated money story <b style="color:#ffc42e">every day</b></h1></div></div>`;
+  host.querySelectorAll('img').forEach(im => im.addEventListener('error', () => { im.style.display = 'none'; }));
   document.getElementById('cine').style.height = isSmall ? 'auto' : '100vh';
   const copy = document.getElementById('cine-copy'); if (copy) copy.style.display = 'none';
   const cards = document.getElementById('cine-cards'); if (cards) { cards.style.opacity = 1; cards.style.position = 'static'; cards.style.marginTop = '24px'; }
@@ -37,8 +38,8 @@ function runFallback() {
 
 function runCinematic() {
   const canvasHost = document.getElementById('cine-canvas');
-  const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: false, powerPreference: 'high-performance' });
-  renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+  const renderer = new THREE.WebGLRenderer({ antialias: devicePixelRatio < 1.5, alpha: false, powerPreference: 'high-performance' });
+  renderer.setPixelRatio(Math.min(devicePixelRatio, 1.75));
   renderer.toneMapping = THREE.ACESFilmicToneMapping; // avoids the flat/muddy default render
   renderer.toneMappingExposure = 1.15;
   renderer.outputColorSpace = THREE.SRGBColorSpace;
@@ -70,6 +71,8 @@ function runCinematic() {
   const fill = new THREE.DirectionalLight(0xffe9b3, 0.6); fill.position.set(-2, 3, 5); scene.add(fill);
   scene.add(new THREE.HemisphereLight(0xfff6e0, 0x1a1420, 0.5)); // cheap gradient fill, no env capture needed
 
+  renderer.initTexture(emblem); renderer.compile(scene, camera);   // pay shader-compile + texture-upload cost now, not on the first scroll
+
   function resize() {
     const w = canvasHost.clientWidth, h = canvasHost.clientHeight;
     renderer.setSize(w, h, false);
@@ -77,16 +80,28 @@ function runCinematic() {
   }
   resize(); addEventListener('resize', resize);
 
-  let floatT = 0;
-  renderer.setAnimationLoop(() => {
-    floatT += 0.01;
+  // Time-based (not per-frame) so the float is identical at 60, 144 or 240 Hz; stops rendering once the pinned intro is off-screen.
+  const cineEl = document.getElementById('cine');
+  let lastT = 0, floatT = 0, ratio = renderer.getPixelRatio(), checked = 0, tickN = 0;
+  renderer.setAnimationLoop(t => {
+    const dt = Math.min((t - lastT) / 1000, 0.05); lastT = t;
+    if (scrollY > cineEl.offsetHeight) return;
+    // The page UI runs at the display's full rate; the 3D coin renders every Nth frame (N divides the refresh rate, so cadence stays even).
+    const m = window.__motion || {}, hz = m.hz || 60, low = document.documentElement.dataset.perf === 'low';
+    const n = low ? Math.max(2, Math.round(hz / 30)) : hz >= 100 ? Math.round(hz / 72) || 1 : 1;
+    floatT += dt * 0.6;
+    if (++tickN % n) return;
     coin.position.y = Math.sin(floatT) * 0.08; // gentle idle float, independent of scroll rotation
+    if (++checked % 90 === 0) {                 // adaptive resolution: shed pixels first if frames are missing budget
+      const want = document.documentElement.dataset.perf === 'low' ? 1 : Math.min(devicePixelRatio, 1.75);
+      if (want !== ratio) { ratio = want; renderer.setPixelRatio(ratio); resize(); }
+    }
     renderer.render(scene, camera);
   });
 
   // --- scroll choreography: pin, rotate one full turn, release into copy + cards ---
   const tl = gsap.timeline({
-    scrollTrigger: { trigger: '#cine', start: 'top top', end: 'bottom bottom', scrub: 0.6, pin: '#cine-pin' },
+    scrollTrigger: { trigger: '#cine', start: 'top top', end: 'bottom bottom', scrub: matchMedia('(hover: hover) and (pointer: fine)').matches ? 0.25 : 0.6, pin: '#cine-pin' },
   });
   tl.to(coin.rotation, { y: Math.PI * 2, ease: 'none' }, 0)
     .to(coin.scale, { x: 1.35, y: 1.35, z: 1.35, ease: 'power1.inOut' }, 0)

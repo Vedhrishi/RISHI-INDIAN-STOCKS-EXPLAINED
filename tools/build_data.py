@@ -1,6 +1,7 @@
 r"""Build the website data (read-only use of Instagram / YouTube / Facebook data):
 website\data\videos.json, website\supabase\seed.sql, thumbnails in website\thumbs\ and bonus/course media."""
 import os, re, json, glob, datetime, subprocess, shutil
+import sqlite3, urllib.request, urllib.error
 ROOT = r'R:\INSTA'
 WEB = os.path.join(ROOT, 'website')
 for d in ('data', 'thumbs', 'supabase', os.path.join('media', 'bonus'), os.path.join('media', 'course')):
@@ -16,10 +17,38 @@ fb = json.load(open(os.path.join(ROOT, 'facebook', 'captions', 'facebook_meta.js
 comp_f = os.path.join(ROOT, 'youtube', 'captions', 'compilations_meta.json')
 comps = json.load(open(comp_f, encoding='utf-8')) if os.path.exists(comp_f) else {}
 
+def db_youtube_links(known):
+    """YouTube links for videos the engine uploaded (topics_pipeline.db) that yt_status.json
+    doesn't know about. Only videos that are PUBLIC right now are linked (checked with YouTube's
+    credential-free oEmbed endpoint: 200 = public, 403/404 = private or removed), so no link
+    ever points at a still-scheduled video."""
+    out = {}
+    db = os.path.join(ROOT, 'sebi_fin_engine', 'topics_pipeline.db')
+    if not os.path.exists(db):
+        return out
+    try:
+        con = sqlite3.connect(db)
+        rows = con.execute("select ep, part, yt_video_id from episodes where yt_video_id is not null and yt_video_id != 'business-suite'").fetchall()
+        con.close()
+    except Exception:
+        return out
+    for ep, part, vid in rows:
+        key = f'{ep}_{part}'
+        if known.get(key, {}).get('url'):
+            continue
+        try:
+            urllib.request.urlopen(f'https://www.youtube.com/oembed?url=https://www.youtube.com/watch?v={vid}&format=json', timeout=10)
+            out[key] = f'https://youtube.com/shorts/{vid}'
+        except Exception:
+            pass  # private/scheduled, removed, or offline: leave unlinked
+    return out
+
+
 def topic(k):
     return yt[k]['title'].split(' | ')[0].split(' \u2192 ')[-1]
 
 CAP = json.load(open(os.path.join(ROOT, 'series_cap.json')))['last_ep']
+db_links = db_youtube_links(yts)
 eps = []
 for k, v in yt.items():
     ep, part = v['ep'], v['part']
@@ -34,7 +63,7 @@ for k, v in yt.items():
         subprocess.run(['ffmpeg', '-v', 'error', '-y', '-ss', '6', '-i', src, '-frames:v', '1', '-vf', 'scale=270:-2', '-q:v', '6', dst])
     eps.append(dict(ep=ep, part=part, title=topic(k), series_title=yt[f'{ep}_1']['title'].split(' | ')[0],
                     publish=date, tags=tags[:4], thumb=thumb,
-                    youtube=yts.get(k, {}).get('url') or '', instagram=IG, facebook=FB))
+                    youtube=yts.get(k, {}).get('url') or db_links.get(k, ''), instagram=IG, facebook=FB))
 eps.sort(key=lambda e: (e['publish'], e['ep'], e['part']))
 
 weekly = [] if True else [dict(week=m['week'], title=m['title'], publish=m['publish'], minutes=m['minutes'], dates=m['dates'],

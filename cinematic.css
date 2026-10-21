@@ -5,7 +5,7 @@
 #cine-canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
 #cine-canvas canvas{width:100%!important;height:100%!important}
 #cine-nav{position:fixed;top:0;left:0;right:0;z-index:30;display:flex;justify-content:space-between;align-items:center;
-  padding:18px 28px;color:#fff;mix-blend-mode:difference}
+  padding:18px 28px;color:#fff}
 #cine-nav .brand{display:flex;align-items:center;gap:10px;font-weight:800;font-size:20px;text-decoration:none;color:#fff}
 #cine-nav .brand img{width:34px;height:34px;border-radius:50%}
 #cine-copy{position:relative;z-index:10;text-align:center;color:#fff;pointer-events:none;max-width:720px;padding:0 24px}

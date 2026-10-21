@@ -1,10 +1,16 @@
 // Scroll-driven engagement: progress bar, reveal-on-scroll, count-up, rotating headline, spotlight, follow bar.
 const $ = s => document.querySelector(s), $$ = s => [...document.querySelectorAll(s)];
 const bar = $('#progress'), follow = $('#follow');
-addEventListener('scroll', () => {
-  const h = document.documentElement;
-  bar.style.width = (h.scrollTop / (h.scrollHeight - h.clientHeight) * 100) + '%';
-  follow.classList.toggle('show', h.scrollTop > 700);
+const navEl = $('.nav'); let lastY = 0, tick = false;
+addEventListener('scroll', () => {                       // one write per frame, transform only (no layout)
+  if (tick) return; tick = true;
+  requestAnimationFrame(() => {
+    const h = document.documentElement, y = h.scrollTop;
+    bar.style.transform = `scaleX(${y / Math.max(1, h.scrollHeight - h.clientHeight)})`;
+    follow.classList.toggle('show', y > 700);
+    if (navEl) navEl.classList.toggle('hide', y > lastY && y > 400); lastY = y;
+    tick = false;
+  });
 }, { passive: true });
 
 const io = new IntersectionObserver(es => es.forEach(e => {

@@ -1,0 +1,4 @@
+Contact: mailto:vedhrishi54@gmail.com
+Expires: 2027-10-21T00:00:00.000Z
+Preferred-Languages: en
+Canonical: https://rishi-indian-stocks-explained.vercel.app/.well-known/security.txt

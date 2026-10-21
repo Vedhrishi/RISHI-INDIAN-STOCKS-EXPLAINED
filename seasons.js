@@ -24,7 +24,7 @@
     const out = eps.filter(x => x[1] && released(x[1])).length;
     const cards = eps.length ? eps.map(x => { const p1 = x[1] || x[2]; return `
       <article class="scard ${released(p1) ? '' : 'locked-card'}">
-        <img loading="lazy" src="${p1.thumb}" alt="${esc(p1.series_title)}">
+        <img loading="lazy" decoding="async" width="360" height="640" src="${p1.thumb}" alt="${esc(p1.series_title)}">
         <div class="sbody"><span class="ep">Episode ${p1.ep}</span><h3>${esc(p1.series_title)}</h3>
         <div class="chips">${chip(x[1])}${chip(x[2])}</div></div></article>`; }).join('')
       : `<div class="soon-box">Scripts are written. A new clue every day, coming soon. &#128269;</div>`;

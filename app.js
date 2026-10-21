@@ -1,7 +1,7 @@
 const cfg = window.RISHI_CONFIG || {};
 let supabase = null;
 if (cfg.SUPABASE_URL && cfg.SUPABASE_ANON_KEY) {
-  const { createClient } = await import('https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/+esm');
+  const { createClient } = await import('./vendor/supabase.js');
   supabase = createClient(cfg.SUPABASE_URL, cfg.SUPABASE_ANON_KEY);
 }
 
@@ -23,7 +23,7 @@ let shown = 24, list = episodes;
 function render() {
   grid.innerHTML = list.slice(0, shown).map(e => `
     <article class="card">
-      <img loading="lazy" src="${e.thumb}" alt="${esc(e.title)}">
+      <img loading="lazy" decoding="async" width="360" height="640" src="${e.thumb}" alt="${esc(e.title)}">
       <div class="body">
         <span class="ep">Episode ${e.ep} · Part ${e.part}</span>
         <h3>${esc(e.title)}</h3>
@@ -50,7 +50,7 @@ const weekly = data.weekly.filter(released);
 const wg = document.getElementById('weeklyGrid');
 if (wg) wg.innerHTML = (weekly.length ? weekly : data.weekly.slice(0, 3)).map(w => `
   <article class="card">
-    <img loading="lazy" src="${w.thumb}" alt="${esc(w.title)}">
+    <img loading="lazy" decoding="async" width="360" height="640" src="${w.thumb}" alt="${esc(w.title)}">
     <div class="body"><span class="ep">Week ${w.week} · ${w.minutes} min</span><h3>${esc(w.title)}</h3>
     <span class="date">${released(w) ? 'Out now' : 'Premieres ' + fmt(w.publish)}</span>
     <div class="links"><a class="yt" href="${data.links.youtube}" target="_blank" rel="noopener">Watch on YouTube</a></div></div>
@@ -65,8 +65,11 @@ form.addEventListener('submit', async ev => {
   ev.preventDefault();
   const email = form.querySelector('input').value.trim();
   if (supabase) {
-    const { error } = await supabase.from('course_waitlist').insert({ email });
-    msg.textContent = error ? 'Something went wrong, please try again.' : "You're on the list! We'll email you when the course opens.";
+    if (form.querySelector('input[name=website]')?.value || Date.now() - (window.__wl || 0) < 8000) return;   // honeypot + cooldown
+    window.__wl = Date.now();
+    const { error } = await supabase.from('course_waitlist').insert({ email }, { returning: 'minimal' });
+    const ok = !error || error.code === '23505';                                                          // already on the list = success, no email probing
+    msg.textContent = ok ? "You're on the list! We'll email you when the course opens." : 'Something went wrong, please try again.';
   } else {
     msg.textContent = "Thanks! The waitlist opens once the site is connected to Supabase.";
   }

@@ -5,3 +5,4 @@ supabase/.temp
 !publisher/.env.example
 publisher/state/
 __pycache__/
+.claude/

@@ -9,19 +9,15 @@
 <meta property="og:description" content="A new animated money story every day. Part 1 at 7 AM, Part 2 at 7 PM IST.">
 <meta property="og:image" content="assets/cover.jpg">
 <link rel="icon" href="assets/profile.png">
+<meta name="theme-color" content="#050506">
+<link rel="preload" href="vendor/three.module.js" as="script" crossorigin fetchpriority="low">
 <link rel="stylesheet" href="styles.css">
 <link rel="stylesheet" href="story.css">
 <link rel="stylesheet" href="sell.css">
 <link rel="stylesheet" href="netflix.css">
 <link rel="stylesheet" href="cinematic.css">
-<script type="importmap">
-{"imports":{
-  "three":"https://cdn.jsdelivr.net/npm/three@0.165.0/build/three.module.js",
-  "three/addons/":"https://cdn.jsdelivr.net/npm/three@0.165.0/examples/jsm/",
-  "gsap":"https://cdn.jsdelivr.net/npm/gsap@3.12.5/index.js",
-  "gsap/ScrollTrigger":"https://cdn.jsdelivr.net/npm/gsap@3.12.5/ScrollTrigger.js"
-}}
-</script>
+<link rel="stylesheet" href="tesla.css?v=6">
+<script type="importmap">{"imports":{"three":"./vendor/three.module.js","gsap":"./vendor/gsap.js","gsap/ScrollTrigger":"./vendor/gsap.js"}}</script>
 </head>
 <body>
 <section id="cine">
@@ -128,7 +124,7 @@
         <li>Building and reviewing a trading journal</li>
       </ul>
       <form id="waitlist" class="waitlist">
-        <input type="email" required placeholder="Your email for early access" aria-label="Email">
+        <input type="email" required maxlength="254" autocomplete="email" placeholder="Your email for early access" aria-label="Email"><input type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;opacity:0">
         <button class="btn" type="submit">Join the waitlist</button>
       </form>
       <p id="waitmsg" class="muted small"></p>
@@ -158,5 +154,6 @@
 <script type="module" src="app.js"></script>
 <script src="seasons.js" defer></script>
 <script type="module" src="cinematic.js"></script>
+<script src="motion.js?v=6" defer></script>
 </body>
 </html>
