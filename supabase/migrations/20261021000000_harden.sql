@@ -22,3 +22,6 @@ alter function push_list(text) set search_path = public, pg_temp;
 alter function push_remove(text, text) set search_path = public, pg_temp;
 alter function push_claim(text, text) set search_path = public, pg_temp;
 revoke execute on function push_ok(text) from public, anon, authenticated;
+
+-- 4. Strip the remaining unneeded table privileges (TRUNCATE ignores RLS, so it must not be granted).
+revoke truncate, references, trigger on episodes, course_waitlist, push_subscriptions, push_sent, app_secrets from anon, authenticated;
