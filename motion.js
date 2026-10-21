@@ -54,7 +54,12 @@ if (!reduce && finePointer) {
     scrollTo(0, cur);
     if (active) requestAnimationFrame(tick);
   }
-  const go = y => { target = clamp(y, 0, max()); if (!active) { cur = scrollY; active = true; last = performance.now(); requestAnimationFrame(tick); } };
+  const go = y => {
+    target = clamp(y, 0, max());
+    if (!active) { cur = scrollY; active = true; last = performance.now(); requestAnimationFrame(tick); }
+    clearTimeout(go.guard);                                   // safety net: if frames are being withheld, scroll natively instead of stalling
+    go.guard = setTimeout(() => { if (active && Math.abs(scrollY - cur) < 1 && cur !== target) { active = false; cur = target; scrollTo(0, target); } }, 250);
+  };
   addEventListener('wheel', e => {
     if (e.ctrlKey || e.metaKey || e.shiftKey || document.querySelector('dialog[open]') || insideScroller(e.target)) return;
     e.preventDefault();
