@@ -2,10 +2,10 @@
 
 **Live site:** https://rishi-indian-stocks-explained.vercel.app
 
-A content platform for an animated financial-literacy series: **365 daily episodes (730 short videos)** that explain savings, tax, scams, insurance and investing to Indian families through recurring characters (Rishi, Priya, Paati, Murugan, Ravi). The site gathers the series across Instagram, YouTube and Facebook.
+A content platform for an animated financial-literacy series: **100 episodes (200 short videos), released twice daily** that explain savings, tax, scams, insurance and investing to Indian families through recurring characters (Rishi, Priya, Paati, Murugan, Ravi). The site gathers the series across Instagram, YouTube and Facebook.
 
 ## Highlights
-- **Automated video pipeline (Python + Pillow + FFmpeg/NVENC):** procedurally animated 80-second vertical episodes with TTS narration and subtitles; 52 auto-generated 16:9 weekly compilations with chapters and thumbnails.
+- **Automated video pipeline (Python + Pillow + FFmpeg/NVENC):** procedurally animated 80-second vertical episodes with TTS narration and subtitles; weekly 16:9 compilations with chapters and thumbnails (planned).
 - **Multi-platform publishing:** per-platform caption/metadata generators (Instagram, YouTube Shorts with SEO tags, Facebook Reels) and scheduled automation keeping each calendar filled.
 - **Website (this repo):** static, dependency-free front end (HTML/CSS/vanilla JS) deployed on **Vercel**; optional **Supabase** backend (Postgres + Row Level Security) for live episode data and a course waitlist.
 - Release-aware episode grid (episodes appear after their posting time), topic search, weekly compilations, bonus "earn with skills" videos, and a locked course preview.
