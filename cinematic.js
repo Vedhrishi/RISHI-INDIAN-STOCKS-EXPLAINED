@@ -3,10 +3,8 @@
 // this is built from real geometry/materials/lighting rather than faked).
 // Scroll pins the hero and scrubs one full 360deg rotation; once done, headline + cards
 // fade in. Falls back to a simple auto-rotating image on touch/low-power/reduced-motion.
-import * as THREE from 'three';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-gsap.registerPlugin(ScrollTrigger);
+// three/gsap are loaded on demand so phones taking the lightweight fallback never download them.
+let THREE, gsap, ScrollTrigger;
 
 const prefersReduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
 const isSmall = matchMedia('(max-width: 600px)').matches;
@@ -19,7 +17,11 @@ if (!root) { /* section not present on this page */ }
 else if (!canWebGL || prefersReduced || isSmall) {
   runFallback();
 } else {
-  runCinematic();
+  Promise.all([import('three'), import('gsap'), import('gsap/ScrollTrigger')]).then(([t, g, st]) => {
+    THREE = t; gsap = g.default; ScrollTrigger = st.ScrollTrigger;
+    gsap.registerPlugin(ScrollTrigger);
+    runCinematic();
+  }).catch(runFallback);
 }
 
 function runFallback() {

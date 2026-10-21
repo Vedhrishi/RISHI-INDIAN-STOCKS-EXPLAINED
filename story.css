@@ -1,0 +1,49 @@
+/* story seasons, characters, mobile-first polish (15 Oct 2026) */
+.hero-stage{position:relative;height:420px}
+.hero-stage .char{position:absolute;bottom:0;filter:drop-shadow(0 18px 24px rgba(0,0,0,.35));animation:bob 4s ease-in-out infinite}
+.c-rishi{height:360px;left:28%}.c-priya{height:330px;left:56%;animation-delay:-1.3s}.c-kid{height:200px;left:6%;animation-delay:-2.2s}
+.bubble{position:absolute;top:10px;right:0;background:#fff;color:var(--navy);font-weight:700;padding:10px 14px;border-radius:16px 16px 16px 4px;max-width:240px;box-shadow:0 10px 30px rgba(0,0,0,.25);animation:pop .8s .6s both}
+.sparkles i{position:absolute;width:8px;height:8px;border-radius:50%;background:var(--gold);box-shadow:0 0 12px var(--gold);animation:twinkle 3s ease-in-out infinite}
+.sparkles i:nth-child(1){left:10%;top:30%}.sparkles i:nth-child(2){left:45%;top:12%;animation-delay:-.6s}.sparkles i:nth-child(3){left:80%;top:40%;animation-delay:-1.2s}
+.sparkles i:nth-child(4){left:25%;top:60%;animation-delay:-1.8s}.sparkles i:nth-child(5){left:65%;top:25%;animation-delay:-.3s}.sparkles i:nth-child(6){left:90%;top:70%;animation-delay:-2.1s}
+.sparkles i:nth-child(7){left:5%;top:80%;animation-delay:-1s}.sparkles i:nth-child(8){left:55%;top:55%;animation-delay:-2.6s}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+@keyframes twinkle{0%,100%{opacity:.2;transform:scale(.6)}50%{opacity:1;transform:scale(1.2)}}
+@keyframes pop{from{opacity:0;transform:scale(.6)}to{opacity:1;transform:scale(1)}}
+.continue{display:flex;flex-direction:column;gap:2px;max-width:1120px;margin:28px auto 0;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);border-radius:18px;padding:14px 18px;text-decoration:none;backdrop-filter:blur(6px)}
+.continue span{color:var(--mint);font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em}.continue b{font-size:17px}
+.season{margin:28px 0 36px}
+.sbanner{border-radius:20px;background-size:cover;background-position:center;min-height:170px;display:flex;align-items:flex-end;padding:18px;color:#fff;position:relative;overflow:hidden}
+.sbanner:before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(10,6,30,.75),rgba(10,6,30,0) 70%)}
+.sbanner>div{position:relative}.sbanner h3{margin:0;font-size:26px;color:var(--gold)}.sbanner p{margin:4px 0 8px;opacity:.9}
+.pill{display:inline-block;background:var(--gold);color:var(--navy);font-weight:800;font-size:12px;padding:4px 10px;border-radius:999px}
+.shelf{display:grid;grid-auto-flow:column;grid-auto-columns:200px;gap:14px;overflow-x:auto;padding:14px 2px 10px;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:thin}
+.shelf>*{scroll-snap-align:start}
+.scard{background:var(--card);border-radius:16px;overflow:hidden;box-shadow:0 6px 20px rgba(30,20,80,.10);display:flex;flex-direction:column;transition:transform .2s}
+.scard:hover{transform:translateY(-4px)}
+.scard img{width:100%;aspect-ratio:9/14;object-fit:cover;background:#ddd}
+.scard.locked-card img{filter:grayscale(.6) brightness(.8)}
+.sbody{padding:10px 12px 12px;display:flex;flex-direction:column;gap:6px;flex:1}
+.sbody .ep{font-size:12px;color:var(--purple);font-weight:800}.sbody h3{font-size:14px;margin:0;line-height:1.3}
+.chips{display:flex;gap:6px;flex-wrap:wrap;margin-top:auto}
+.chip{font-size:12px;font-weight:800;padding:7px 11px;border-radius:999px;text-decoration:none;background:var(--purple);color:#fff;min-height:32px;display:inline-flex;align-items:center}
+.chip.seen{background:var(--mint);color:var(--navy)}.chip.soon{background:#ece9f6;color:var(--muted)}
+.soon-box{padding:28px;border-radius:16px;background:#fff;box-shadow:0 6px 20px rgba(30,20,80,.08);min-width:260px}
+.tabbar{display:none}
+@media (max-width:820px){
+  body{padding-bottom:72px}
+  .hero{padding:0 16px 32px}
+  h1{font-size:30px}.lead{font-size:16px}
+  .hero-stage{height:250px;order:-1}
+  .c-rishi{height:220px;left:30%}.c-priya{height:200px;left:58%}.c-kid{height:125px;left:4%}
+  .bubble{font-size:13px;max-width:170px;padding:8px 10px}
+  .platforms .btn{flex:1;text-align:center;padding:12px 10px}
+  main{padding:0 14px}section{padding:36px 0 4px}h2{font-size:24px}
+  .shelf{grid-auto-columns:46%}
+  .sbanner{min-height:140px}.sbanner h3{font-size:21px}
+  .grid{grid-template-columns:repeat(2,1fr);gap:12px}
+  .follow{display:none!important}
+  .tabbar{display:flex;position:fixed;left:0;right:0;bottom:0;z-index:50;background:rgba(22,26,64,.96);backdrop-filter:blur(8px);padding:6px 6px calc(6px + env(safe-area-inset-bottom));justify-content:space-around;box-shadow:0 -6px 20px rgba(0,0,0,.25)}
+  .tabbar a{color:#fff;text-decoration:none;font-size:11px;font-weight:700;display:flex;flex-direction:column;align-items:center;gap:2px;padding:6px 10px;border-radius:12px;min-width:64px}
+  .tabbar a span{font-size:20px}
+}
