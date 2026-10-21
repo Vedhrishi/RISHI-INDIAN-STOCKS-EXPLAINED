@@ -75,3 +75,10 @@ html[data-perf=low] .card::after{display:none}
 
 #cine-nav{transition:opacity .5s var(--ease)}
 .past-cine #cine-nav,.past-cine #cine-sound{opacity:0;pointer-events:none}
+
+/* contrast: brand-coloured buttons and badges must reach WCAG AA (4.5:1) with white text */
+#follow .btn.yt,.tabbar .btn.yt{background:#c4001d;color:#fff}
+#follow .btn.fb,.tabbar .btn.fb{background:#1257c7;color:#fff}
+.live{background:#b3001b!important;color:#fff!important}
+.links a.yt,.spot a.yt{background:#c4001d;color:#fff}
+.links a.fb,.spot a.fb{background:#1257c7;color:#fff}
