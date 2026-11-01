@@ -1,0 +1,28 @@
+name: automation-ci
+
+on:
+  push:
+    paths: ["automation/**", ".github/workflows/ci.yml"]
+  pull_request:
+    paths: ["automation/**", ".github/workflows/ci.yml"]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: automation/youtube_pipeline
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+          cache-dependency-path: automation/youtube_pipeline/requirements-dev.txt
+      - name: System packages (ffmpeg + font)
+        run: sudo apt-get update && sudo apt-get install -y ffmpeg fonts-dejavu-core
+      - run: pip install -r requirements-dev.txt
+      - name: Compile all modules
+        run: python -m py_compile config.py scraper.py script_gen.py voice.py visuals.py uploader.py auth_youtube.py main.py doctor.py ../rishi_setup.py ../meta_scheduler/build_manifest.py
+      - name: Offline tests
+        run: pytest -q

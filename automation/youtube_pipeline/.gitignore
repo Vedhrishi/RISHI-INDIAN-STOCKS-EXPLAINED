@@ -1,0 +1,8 @@
+output/
+state/
+.env
+token.json
+client_secret.json
+venv/
+__pycache__/
+cron.log

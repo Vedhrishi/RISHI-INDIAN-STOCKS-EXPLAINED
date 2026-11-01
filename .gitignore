@@ -3,6 +3,12 @@
 supabase/.temp
 .env*
 !publisher/.env.example
+!automation/youtube_pipeline/.env.example
+automation/youtube_pipeline/token.json
+automation/youtube_pipeline/client_secret.json
+automation/youtube_pipeline/output/
+automation/youtube_pipeline/state/
+automation/youtube_pipeline/venv/
 publisher/state/
 __pycache__/
 .claude/
